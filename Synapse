@@ -1,0 +1,68 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author mhd57_000
+ */
+import java.util.*;
+public class Synapse {
+    
+        
+    //May not need layerTo at all. Depends if we always want to reference layerOrig + 1
+	private final int layerOrig, neurOrig, layerTo, neurTo;
+	private final double maxWeight = 1;
+	private double weight;
+        	
+	//Similar situation: do we want to pass it layer to?
+	public Synapse (int lOrig, int nOrig, int nTo){
+
+		layerOrig = lOrig;
+		neurOrig = nOrig;
+		layerTo = lOrig + 1;
+		neurTo = nTo;
+
+		weight = Math.random() * 2 - 1 * maxWeight;
+	}
+	
+	//Not sure if we will ever use this
+	public Synapse (int lOrig, int nOrig, int nTo, double w){
+
+		layerOrig = lOrig;
+		neurOrig = nOrig;
+		layerTo = lOrig + 1;
+		neurTo = nTo;
+
+		//Is there a function that does this for us?
+		if (w > maxWeight) {
+			weight = maxWeight;
+		}
+		else if (w < -maxWeight) {
+			weight = -maxWeight;
+		}
+		else weight = w;
+	}
+
+	public double getWeight() {
+
+		return weight;
+
+	}
+	
+	public void updateWeight(double w){
+
+		//Same as before, is there a function for this?
+		if (w > maxWeight) {
+			weight = maxWeight;
+		}
+		else if (w < -maxWeight) {
+			weight = -maxWeight;
+		}
+		else weight = w;
+                
+	}
+
+}
