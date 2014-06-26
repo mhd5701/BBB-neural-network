@@ -1,0 +1,60 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author mhd57_000
+ */
+import java.util.*;
+public class NeuralLayer {
+// Layer may not be necessary unless each piece of network needs to
+    // -- know its own position
+    int numInputs, numNeurons, layer;
+    ArrayList<Neuron> Neurons = new ArrayList<Neuron>();
+
+	public NeuralLayer(int nI, int nN, int l) {
+		
+            numInputs = nI;
+            numNeurons = nN;
+            layer = l;
+
+		// Again may not be necessary unless neuron needs to know its
+		// -- position in the overall network
+            ArrayList<Integer> neurPos = new ArrayList<>();
+            neurPos.add(1);
+            neurPos.add(0);
+		// Loop to generate all the neurons in the layer with value 0 -
+		// Initial value of neuron doesn't matter as it will be
+		// -- calculated each time
+            for (int i = 0; i < nN; i++) {
+            	
+		Neurons.add(new Neuron(neurPos));
+                neurPos.set(1,i+1);
+            }
+
+                // Add a neuron with value -1 that will be multiplied by the
+		// -- threshold weights for the next layer
+		// We'll need to make sure this doesn't happen for output layer.
+		// Maybe pass a bool that's true if it is the output layer and
+		// -- throw in a conditional here
+            Neurons.add(new Neuron(neurPos,-1.0));
+	}
+
+	// For later - we may start with a bunch of neurons and trim out any
+	// -- that have all weights leading to them = 0
+	public void trimNeurons (ArrayList<Integer> posArr) {
+
+		// Ensure location of removed neurons in ascending order
+		Collections.sort(posArr);
+
+		// Start at the end and work back to avoid the problem
+		// -- of the index of removed neurons changing		
+		for (int i = posArr.size() - 1; i >= 0; i--) {
+			Neurons.remove(posArr.get(i));
+		}
+
+	}    
+}
